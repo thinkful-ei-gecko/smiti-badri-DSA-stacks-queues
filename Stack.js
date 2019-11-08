@@ -171,10 +171,31 @@ function sortStack(originalStack){
     }
 }
 
-let stack = new Stack();
-stack.push(6)
-stack.push(3)
-stack.push(5)
-stack.push(2)
-sortStack(stack)
-console.log(JSON.stringify(stack))
+// let stack = new Stack();
+// stack.push(6)
+// stack.push(3)
+// stack.push(5)
+// stack.push(2)
+// sortStack(stack)
+// console.log(JSON.stringify(stack))
+
+class sQueue{
+    constructor(){
+       this.oldStack = new Stack()
+       this.newStack = new Stack()
+    }
+    _reverse(){
+        if (isEmpty(this.newStack)) {
+            while(!isEmpty(this.oldStack)){
+                this.newStack.push(this.oldStack.pop())
+            }
+        }
+    }
+    enqueue(item){
+        this.oldStack.push(item)
+    }
+    dequeue(){
+        this._reverse()
+        return this.newStack.pop()
+    }
+}

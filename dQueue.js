@@ -1,5 +1,5 @@
 class _Node{
-    constructor(value){
+    constructor(value, next, prev){
         this.value = value;
         this.next = null;
         this.prev = null;
@@ -13,20 +13,17 @@ class dQueue{
     }
     enqueue(data){
 
-        const node = new _Node(data);
+        const node = new _Node(data, null, null);
 
         if(this.first === null){
             this.first = node;
         }
+
         if(this.last){
+            node.prev = this.last
             this.last.next = node;
-            let currentNode = this.first
-            while(currentNode.next !== null){
-                currentNode.prev = currentNode
-                currentNode = currentNode.next
-            }
-            this.last.prev = currentNode
         }
+
         this.last = node;
     }
 
@@ -35,8 +32,20 @@ class dQueue{
             return;
         }
         const currNode = this.first;
-        this.first = this.first.next;
+        this.first = currNode.next;
 
-        return currNode.data;
+        return currNode.value;
     }
 }
+
+function main(){
+    const starTrekQ = new dQueue();
+    starTrekQ.enqueue('Kirk');
+    starTrekQ.enqueue('Spock');
+    starTrekQ.enqueue('Uhura');
+    starTrekQ.enqueue('Sulu');
+    starTrekQ.enqueue('Checkov');
+    console.log(starTrekQ)
+}
+
+main()
