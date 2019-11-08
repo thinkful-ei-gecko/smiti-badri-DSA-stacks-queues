@@ -68,10 +68,68 @@ function main(){
     starTrekQ.dequeue();
     starTrekQ.dequeue();
     function display(Queue){
-        console.log(JSON.stringify(Queue.first));
+        //console.log(JSON.stringify(Queue.first));
     }
 
-    display(starTrekQ);
+    //display(starTrekQ);
+    const dancingteam = new Queue();
+    dancingteam.enqueue({gender: 'F', name: 'Cindy'});
+    dancingteam.enqueue({gender: 'M', name: 'Ben'});
+    dancingteam.enqueue({gender: 'M', name: 'John'});
+    dancingteam.enqueue({gender: 'F', name: 'Jessie'});
+    dancingteam.enqueue({gender: 'F', name: 'Jenna'});
+    //console.log(JSON.stringify(dancingteam));
+    
+
+    function pairPartner(dancingteam){
+        const maleQueue = new Queue();
+        const femaleQueue = new Queue();
+
+
+        while(dancingteam.first !== null){
+        const next = dancingteam.first.value;
+        dancingteam.dequeue();
+
+        if(next.gender === 'F'){
+            femaleQueue.enqueue(next.name);
+        }
+        else{
+            maleQueue.enqueue(next.name);
+        }
+    }
+    while(femaleQueue.first !== null && maleQueue.first !== null){
+        const pairs = 'The female dancer is ' + femaleQueue.first.value + ' and the male dancer is ' + maleQueue.first.value + '.';
+        femaleQueue.dequeue();
+        maleQueue.dequeue();
+        console.log(pairs);
+    }
+    if( femaleQueue.first !== null){
+        let currNode = femaleQueue.first;
+        let count = 0;
+        while(currNode !== null){
+            currNode = currNode.next;
+            count++;
+        }
+        console.log('There are '+ count + ' women waiting to dance.');
+    }
+    if( maleQueue.first !== null){
+        let currNode = maleQueue.first;
+        let count = 0;
+        while(currNode !== null){
+            currNode = currNode.next;
+            count++;
+        }
+        console.log('There are '+ count + ' male waiting to dance.');
+    }
+    //console.log(maleQueue.first);
+    //console.log(pairPartner(dancingteam));
+    
+
+    }
+    pairPartner(dancingteam);   
+
+
+
     
 
 }
