@@ -26,7 +26,33 @@ class Stack{
         return node.data;
 
     }
+
+    peek(){
+        if(this.top === null){
+
+            console.log( 'The Stack is empty');
+        }
+        console.log(this.top.data);
+    }
+    isEmpty(){
+        if(this.top === null){
+            console.log('This Stack is empty')
+            return;
+        }
+        console.log('This Stack is not empty')
+    }
    
+    display(){
+        if(this.top === null){
+           return;
+        }
+        let currNode = this.top;
+        while(currNode.next !== null){
+            currNode = currNode.next;
+        }
+        console.log('The first time in the stack is '+ currNode.data);
+
+    }
 }
 
 
@@ -36,6 +62,11 @@ function main(){
     starTrek.push('Spock');
     starTrek.push('McCoy');
     starTrek.push('Scotty');
+    starTrek.peek();
+    starTrek.isEmpty();
+    starTrek.display();
+    starTrek.pop();
+    starTrek.pop();
     console.log(JSON.stringify(starTrek));
 }
  
