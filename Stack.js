@@ -13,7 +13,7 @@ class Stack{
     push(data){
         if(this.top === null){
             this.top = new _Node(data, null);
-            return this.top;
+            return;
         }
       //if the stack is not empty, we create a new node and point of new node as the top
         const node = new _Node(data, this.top);
@@ -22,37 +22,61 @@ class Stack{
 
     pop(){
         const node = this.top;
-        this.top = node.next;
-        return node.data;
-
-    }
-
-    peek(){
-        if(this.top === null){
-
-            console.log( 'The Stack is empty');
+        if(node) {
+        	this.top = node.next;
+        	return node.data;
+        } else {
+        	return null
         }
-        console.log(this.top.data);
     }
-    isEmpty(){
-        if(this.top === null){
-            return true;
-        }
-        return false; 
-    }
+
+    // peek(){
+    //     if(this.top === null){
+    //         return null
+    //     }
+    //     return this.top.data;
+    // }
+    // isEmpty(){
+    //     if(this.top === null){
+    //         return true;
+    //     }
+    //     return false; 
+    // }
    
-    display(){
-        if(this.top === null){
-           return;
-        }
-        let currNode = this.top;
-        while(currNode.next !== null){
-            currNode = currNode.next;
-        }
-        console.log('The first time in the stack is '+ currNode.data);
-
+    // display(){
+    //     if(this.top === null){
+    //        return;
+    //     }
+    //     let currNode = this.top;
+    //     while(currNode !== null){
+    //         console.log(currNode.data);
+    //         currNode = currNode.next;
+    //     }
+    // }
+}
+function peek(s) {
+    //if the top of the stack does not have anything 
+    //then the stack is empty
+    //otherwise return what's on the top
+    if (!s.top) {
+        return null;
+    } else {
+    	return s.top.data;
     }
 }
+function display(newStack) {
+    // displays the entire contents of the stack
+    let node = newStack.top;
+    while (node) {
+        console.log(node.data);
+        node = node.next;
+    }
+}
+
+function isEmpty(s){
+    return (s.top === null) || (s.top === undefined);
+}
+
 
 
 function main(){
@@ -130,5 +154,27 @@ function is_balanced(expression) {
     return false
 }
 
-console.log(is_balanced('({[]})'))
-console.log(is_balanced('(){[]()'))
+// console.log(is_balanced('({[]})'))
+// console.log(is_balanced('(){[]()'))
+
+function sortStack(originalStack){
+    let newStack = new Stack();
+    while(!isEmpty(originalStack)){
+        let temp = originalStack.pop();
+        while(!isEmpty(newStack) && (peek(newStack) > temp)){
+            originalStack.push(newStack.pop());
+        }
+        newStack.push(temp);
+    }
+    while(!isEmpty(newStack)){
+        originalStack.push(newStack.pop());
+    }
+}
+
+let stack = new Stack();
+stack.push(6)
+stack.push(3)
+stack.push(5)
+stack.push(2)
+sortStack(stack)
+console.log(JSON.stringify(stack))
