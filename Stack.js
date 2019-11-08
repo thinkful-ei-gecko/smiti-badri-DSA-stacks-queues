@@ -36,10 +36,9 @@ class Stack{
     }
     isEmpty(){
         if(this.top === null){
-            console.log('This Stack is empty')
-            return;
+            return true;
         }
-        console.log('This Stack is not empty')
+        return false; 
     }
    
     display(){
@@ -70,5 +69,66 @@ function main(){
     console.log(JSON.stringify(starTrek));
 }
  
-main();
+// main();
 
+function is_palindrome(s) {
+    s = s.toLowerCase().replace(/[^a-zA-Z0-9]/g, "");
+    const stack = new Stack();
+    for (let i=0; i<s.length; i++) {
+        stack.push(s[i])
+    }
+    let newStr = ''
+    for (let j=0; j<s.length; j++) {
+        newStr = newStr + stack.pop()
+    }
+    if(newStr === s) {
+        return true
+    }
+    return false;
+}
+
+//True, true, true, false
+// console.log(is_palindrome("dad"));
+// console.log(is_palindrome("A man, a plan, a canal: Panama"));
+// console.log(is_palindrome("1001"));
+// console.log(is_palindrome("Tauhida"));
+
+function is_balanced(expression) {
+    const stack = new Stack();
+    for (let i=0; i<expression.length; i++){
+        if (expression[i] === '(') {
+            stack.push(expression[i])
+        }
+        if (expression[i] === ')') {
+            if (stack.isEmpty()) {
+                return false
+            }
+            stack.pop();
+        }
+        if (expression[i] === '{') {
+            stack.push(expression[i])
+        }
+        if (expression[i] === '}') {
+            if (stack.isEmpty()) {
+                return false
+            }
+            stack.pop();
+        }
+        if (expression[i] === ']') {
+            stack.push(expression[i])
+        }
+        if (expression[i] === '[') {
+            if (stack.isEmpty()) {
+                return false
+            }
+            stack.pop();
+        }
+    }
+    if(stack.isEmpty()){
+        return true
+    }
+    return false
+}
+
+console.log(is_balanced('({[]})'))
+console.log(is_balanced('(){[]()'))
